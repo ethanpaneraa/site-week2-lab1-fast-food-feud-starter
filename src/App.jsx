@@ -1,6 +1,7 @@
 // IMPORT ANY NEEDED COMPONENTS HERE
 import { Dataset } from "./data/dataset";
 import Header from "./components/Header/Header"; 
+import Chip from "./components/Chip/Chip";
 import "./App.css"
 
 // don't move this!
@@ -30,7 +31,7 @@ export function App() {
         <div className="categories options">
           <h2 className="title">Categories</h2>
           {categories.map((category, index) => (
-            <p key={index}>{category}</p>
+            <Chip key={index} label={category} />
           ))}
         </div>
       </div>
@@ -44,7 +45,7 @@ export function App() {
           <h2 className="title">Restaurants</h2>
           <div className="restaurants options">
             {restaurants.map((resturant, index) => (
-              <p key={index}>{resturant}</p>
+              <Chip key={index} label={resturant} />
             ))}
           </div>
         </div>
