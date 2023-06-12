@@ -22,13 +22,16 @@ export const appInfo = {
 export function App() {
   const { data, categories, restaurants } = Dataset.createDataSet()
 
+  console.log(categories);
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
       <div className="CategoriesColumn col">
         <div className="categories options">
           <h2 className="title">Categories</h2>
-          {/* YOUR CODE HERE */}
+          {categories.map((category, index) => (
+            <p key={index}>{category}</p>
+          ))}
         </div>
       </div>
 
@@ -39,7 +42,11 @@ export function App() {
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
           <h2 className="title">Restaurants</h2>
-          <div className="restaurants options">{/* YOUR CODE HERE */}</div>
+          <div className="restaurants options">
+            {restaurants.map((resturant, index) => (
+              <p key={index}>{resturant}</p>
+            ))}
+          </div>
         </div>
 
         {/* INSTRUCTIONS GO HERE */}
