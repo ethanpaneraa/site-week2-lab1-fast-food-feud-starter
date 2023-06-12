@@ -2,13 +2,23 @@ import { nutritionFacts } from "../../constants"
 import "./NutritionalLabel.css"
 
 export function NutritionalLabel(props) {
+
+  console.log(props); 
+
   return (
     <div className="nutritional-label">
       <h3 className="title">Nutrition Facts</h3>
 
-      <h4 className="item-name">{`CHANGE_ME`}</h4>
+      <h4 className="item-name">{props.menuDish.item_name}</h4>
 
-      <ul className="fact-list">{/* WRITE CODE HERE */}</ul>
+      <ul className="fact-list">{nutritionFacts.map((elem, index) => (
+        <NutritionalLabelFact 
+          key={index} 
+          id={elem.id} 
+          label={elem.label} 
+          attribute={elem.attribute}
+          item={props.menuDish} />
+      ))}</ul>
     </div>
   )
 }
@@ -16,8 +26,8 @@ export function NutritionalLabel(props) {
 export function NutritionalLabelFact(props) {
   return (
     <li className="nutrition-fact">
-      <span className="fact-label">{/* WRITE CODE HERE */}</span>{" "}
-      <span className="fact-value">{/* WRITE CODE HERE */}</span>
+      <span className="fact-label">{props.label}</span>{" "}
+      <span className="fact-value">{props.item[props.attribute]}</span>
     </li>
   )
 }

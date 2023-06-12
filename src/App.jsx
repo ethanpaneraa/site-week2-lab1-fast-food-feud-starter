@@ -1,7 +1,10 @@
 // IMPORT ANY NEEDED COMPONENTS HERE
+import React from "react";
+import { useState } from "react";
 import { Dataset } from "./data/dataset";
 import Header from "./components/Header/Header"; 
 import Chip from "./components/Chip/Chip";
+import NutritionalLabel from "./components/NutritionalLabel/NutritionalLabel"; 
 import "./App.css"
 
 // don't move this!
@@ -23,15 +26,41 @@ export const appInfo = {
 export function App() {
   const { data, categories, restaurants } = Dataset.createDataSet()
 
-  console.log(categories);
+  const [category, setCategory] = useState(0); 
+  const [resturant, setResturant] = useState(0); 
+  const [currentCategory, setCurrentCategory] = useState(null); 
+  const [currentResturant, setCurrentResturant] = useState(null); 
+  const [currentItem, setCurrentItem] = useState(null); 
+
+  const [menuItem, setMenuItem] = useState(0); 
+
+  let CurrentMenuitems = data.filter(element => {
+    return (element.food_category === category) && (element.restaurant === resturant)
+  }); 
+
+  console.log(CurrentMenuitems); 
+
+
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
       <div className="CategoriesColumn col">
         <div className="categories options">
           <h2 className="title">Categories</h2>
-          {categories.map((category, index) => (
-            <Chip key={index} label={category} />
+          {categories.map((elem, index) => (
+            <Chip 
+              key={index} 
+              label={elem} 
+              handleClose={(e) => {
+                setCategory(0); 
+              }}
+              isActive={category === elem}
+              onClick={() => {
+                if (category !== elem) {
+                  setCategory(elem)
+                }
+              }}
+              />
           ))}
         </div>
       </div>
@@ -44,8 +73,21 @@ export function App() {
         <div className="RestaurantsRow">
           <h2 className="title">Restaurants</h2>
           <div className="restaurants options">
-            {restaurants.map((resturant, index) => (
-              <Chip key={index} label={resturant} />
+            {restaurants.map((elem, index) => (
+              <Chip 
+                key={index} 
+                label={elem} 
+                handleClose={(e) => {
+                  setResturant(0);
+                }}
+                isActive={resturant === elem}
+                onClick={() => {
+                  if (resturant !== elem) {
+                    setResturant(elem); 
+                  }
+                }}
+              
+              />
             ))}
           </div>
         </div>
@@ -56,11 +98,27 @@ export function App() {
         <div className="MenuDisplay display">
           <div className="MenuItemButtons menu-items">
             <h2 className="title">Menu Items</h2>
-            {/* YOUR CODE HERE */}
+            {CurrentMenuitems.map((elem, index) => (
+              <Chip 
+                key={index} 
+                label={elem.item_name}
+                handleClose={(e) => {
+                  setMenuItem(0); 
+                }}
+                isActive={menuItem === elem}
+                onClick={() => {
+                  if (menuItem !== elem) {
+                    setMenuItem(elem); 
+                  }
+                }}
+                />
+            ))}
           </div>
 
           {/* NUTRITION FACTS */}
-          <div className="NutritionFacts nutrition-facts">{/* YOUR CODE HERE */}</div>
+          <div className="NutritionFacts nutrition-facts">
+            <NutritionalLabel  menuDish={menuItem} />
+          </div>
         </div>
 
         <div className="data-sources">
